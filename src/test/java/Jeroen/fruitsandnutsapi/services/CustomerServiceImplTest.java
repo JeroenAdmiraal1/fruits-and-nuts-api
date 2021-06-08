@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
@@ -57,6 +58,18 @@ class CustomerServiceImplTest {
 		CustomerDTO customerDTO = customerService.getCustomerByLastname(LASTNAME);
 
 		assertEquals(LASTNAME, customerDTO.getLastname());
-		assertEquals(ID, customerDTO.getId());
+	}
+
+	@Test
+	void getCustomerById() {
+		Customer customer = new Customer();
+		customer.setId(3L);
+		customer.setLastname(LASTNAME);
+
+		Mockito.when(customerRepository.getById(anyLong())).thenReturn(customer);
+
+		CustomerDTO customerDTO = customerService.getById(3L);
+
+		assertEquals(LASTNAME, customerDTO.getLastname());
 	}
 }
