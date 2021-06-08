@@ -2,6 +2,7 @@ package Jeroen.fruitsandnutsapi.services;
 
 import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 import Jeroen.fruitsandnutsapi.apimodel.CustomerMapper;
+import Jeroen.fruitsandnutsapi.domain.Customer;
 import Jeroen.fruitsandnutsapi.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +38,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO getById(Long id) {
 		return customerMapper.customerToCustomerDTO(customerRepository.getById(id));
+	}
+
+	@Override
+	public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+
+		Customer savedCustomer = customerRepository.save(customerMapper.customerDtoToCustomer(customerDTO));
+		CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
+		returnDto.setCustomer_url("/customers/" + savedCustomer.getId());
+		return returnDto;
 	}
 }
