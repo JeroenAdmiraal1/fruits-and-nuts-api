@@ -1,7 +1,7 @@
 package Jeroen.fruitsandnutsapi.services;
 
 import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
-import Jeroen.fruitsandnutsapi.apimodel.CustomerMapper;
+import Jeroen.fruitsandnutsapi.apimodel.mappers.CustomerMapper;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import Jeroen.fruitsandnutsapi.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,5 +1,6 @@
 package Jeroen.fruitsandnutsapi.apimodel;
 
+import Jeroen.fruitsandnutsapi.apimodel.mappers.CustomerMapper;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import org.junit.jupiter.api.Test;
 

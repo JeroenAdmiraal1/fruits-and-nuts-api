@@ -1,8 +1,7 @@
 package Jeroen.fruitsandnutsapi.services;
 
 import Jeroen.fruitsandnutsapi.apimodel.CategoryDTO;
-import Jeroen.fruitsandnutsapi.apimodel.CategoryMapper;
-import Jeroen.fruitsandnutsapi.domain.Category;
+import Jeroen.fruitsandnutsapi.apimodel.mappers.CategoryMapper;
 import Jeroen.fruitsandnutsapi.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 

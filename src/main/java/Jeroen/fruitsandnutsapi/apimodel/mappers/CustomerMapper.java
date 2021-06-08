@@ -1,5 +1,6 @@
-package Jeroen.fruitsandnutsapi.apimodel;
+package Jeroen.fruitsandnutsapi.apimodel.mappers;
 
+import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

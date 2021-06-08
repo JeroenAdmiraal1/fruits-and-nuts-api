@@ -1,5 +1,6 @@
 package Jeroen.fruitsandnutsapi.apimodel;
 
+import Jeroen.fruitsandnutsapi.apimodel.mappers.CategoryMapper;
 import Jeroen.fruitsandnutsapi.domain.Category;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
