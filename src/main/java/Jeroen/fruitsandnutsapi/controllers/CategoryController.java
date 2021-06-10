@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/categories")
+@RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
+	public static final String BASE_URL = "/categories";
 	private final CategoryService service;
 
 	public CategoryController(CategoryService service) {

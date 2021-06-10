@@ -2,6 +2,7 @@ package Jeroen.fruitsandnutsapi.services;
 
 import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 import Jeroen.fruitsandnutsapi.apimodel.mappers.CustomerMapper;
+import Jeroen.fruitsandnutsapi.controllers.CustomerController;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import Jeroen.fruitsandnutsapi.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-	public static final String URL = "/customers/";
 	private CustomerRepository customerRepository;
 	private CustomerMapper customerMapper;
 
@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepository.findAll().stream()
 				       .map(customer -> {
 				       	CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-				       	customerDTO.setCustomer_url(URL + customer.getId());
+				       	customerDTO.setCustomer_url(getCustomerUrl(customer.getId()));
 				       	return customerDTO;
 				       })
 				       .collect(Collectors.toList());
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO getById(Long id) {
 		CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.getById(id));
-		customerDTO.setCustomer_url(URL + id);
+		customerDTO.setCustomer_url(getCustomerUrl(id));
 		return customerDTO;
 	}
 
@@ -68,17 +68,26 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 
 			CustomerDTO patchedCustomerDTO = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
-			patchedCustomerDTO.setCustomer_url(URL + id);
+			patchedCustomerDTO.setCustomer_url(getCustomerUrl(id));
 
 			return patchedCustomerDTO;
 		}).orElseThrow(RuntimeException::new);
+	}
+
+	@Override
+	public void deleteCustomerById(Long id) {
+		customerRepository.deleteById(id);
 	}
 
 
 	private CustomerDTO saveAndReturnDTO(Customer customer) {
 		Customer savedCustomer = customerRepository.save(customer);
 		CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
-		returnDto.setCustomer_url(URL + savedCustomer.getId());
+		returnDto.setCustomer_url(getCustomerUrl(savedCustomer.getId()));
 		return returnDto;
+	}
+
+	private String getCustomerUrl(Long id) {
+		return CustomerController.BASE_URL + "/" + id;
 	}
 }
