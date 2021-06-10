@@ -1,13 +1,13 @@
-package Jeroen.fruitsandnutsapi.apimodel;
+package Jeroen.fruitsandnutsapi.apimodel.mappers;
 
-import Jeroen.fruitsandnutsapi.apimodel.mappers.CategoryMapper;
+import Jeroen.fruitsandnutsapi.apimodel.CategoryDTO;
 import Jeroen.fruitsandnutsapi.domain.Category;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-08T14:24:33+0200",
+    date = "2021-06-10T13:12:35+0200",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.10 (AdoptOpenJDK)"
 )
 @Component

@@ -1,6 +1,5 @@
 package Jeroen.fruitsandnutsapi.services;
 
-import Jeroen.fruitsandnutsapi.apimodel.CategoryDTO;
 import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 
 import java.util.List;
@@ -14,4 +13,6 @@ public interface CustomerService {
 	CustomerDTO getById(Long id);
 
 	CustomerDTO createNewCustomer(CustomerDTO customerDTO);
+
+	CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO);
 }
