@@ -42,7 +42,7 @@ class CustomerControllerTest extends AbstractRestControllerTest{
 	@Test
 	void getAllCustomers() throws Exception{
 		CustomerDTO customer1 = new CustomerDTO();
-		customer1.setFirstname("Michale");
+		customer1.setFirstname("Michael");
 		customer1.setLastname("Weston");
 		customer1.setCustomer_url("/customers/1");
 
