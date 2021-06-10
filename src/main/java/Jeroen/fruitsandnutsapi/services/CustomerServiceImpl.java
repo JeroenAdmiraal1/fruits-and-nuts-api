@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	public static final String URL = "/customers/";
 	private CustomerRepository customerRepository;
 	private CustomerMapper customerMapper;
 
@@ -24,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepository.findAll().stream()
 				       .map(customer -> {
 				       	CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-				       	customerDTO.setCustomer_url("/customers/" + customer.getId());
+				       	customerDTO.setCustomer_url(URL + customer.getId());
 				       	return customerDTO;
 				       })
 				       .collect(Collectors.toList());
@@ -38,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDTO getById(Long id) {
 		CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customerRepository.getById(id));
-		customerDTO.setCustomer_url("/customers/" + id);
+		customerDTO.setCustomer_url(URL + id);
 		return customerDTO;
 	}
 
@@ -66,8 +67,10 @@ public class CustomerServiceImpl implements CustomerService {
 				customer.setLastname(customerDTO.getLastname());
 			}
 
-			Customer patchedCustomer = customerRepository.save(customer);
-			return customerMapper.customerToCustomerDTO(patchedCustomer);
+			CustomerDTO patchedCustomerDTO = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+			patchedCustomerDTO.setCustomer_url(URL + id);
+
+			return patchedCustomerDTO;
 		}).orElseThrow(RuntimeException::new);
 	}
 
@@ -75,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerDTO saveAndReturnDTO(Customer customer) {
 		Customer savedCustomer = customerRepository.save(customer);
 		CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
-		returnDto.setCustomer_url("/customers/" + savedCustomer.getId());
+		returnDto.setCustomer_url(URL + savedCustomer.getId());
 		return returnDto;
 	}
 }
