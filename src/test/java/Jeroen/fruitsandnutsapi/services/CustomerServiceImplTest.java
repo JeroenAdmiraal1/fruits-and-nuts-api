@@ -14,9 +14,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -49,25 +51,12 @@ class CustomerServiceImplTest {
 	}
 
 	@Test
-	void getCustomerByLastname() {
-		Customer customer = new Customer();
-		customer.setId(ID);
-		customer.setLastname(LASTNAME);
-
-		Mockito.when(customerRepository.findByLastname(anyString())).thenReturn(customer);
-
-		CustomerDTO customerDTO = customerService.getCustomerByLastname(LASTNAME);
-
-		assertEquals(LASTNAME, customerDTO.getLastname());
-	}
-
-	@Test
 	void getCustomerById() {
 		Customer customer = new Customer();
 		customer.setId(3L);
 		customer.setLastname(LASTNAME);
 
-		Mockito.when(customerRepository.getById(anyLong())).thenReturn(customer);
+		Mockito.when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
 
 		CustomerDTO customerDTO = customerService.getById(3L);
 

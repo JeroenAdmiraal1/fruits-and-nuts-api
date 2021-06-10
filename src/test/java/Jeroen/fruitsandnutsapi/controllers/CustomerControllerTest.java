@@ -2,6 +2,7 @@ package Jeroen.fruitsandnutsapi.controllers;
 
 import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 import Jeroen.fruitsandnutsapi.services.CustomerService;
+import Jeroen.fruitsandnutsapi.services.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,9 @@ class CustomerControllerTest extends AbstractRestControllerTest{
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+		mockMvc = MockMvcBuilders
+				          .standaloneSetup(customerController)
+				          .setControllerAdvice(new RestResponseEntityExceptionHandler()).build();
 	}
 
 	@Test
@@ -148,5 +151,15 @@ class CustomerControllerTest extends AbstractRestControllerTest{
 				.andExpect(status().isOk());
 
 		verify(customerService).deleteCustomerById(anyLong());
+	}
+
+	@Test
+	public void testNotFoundException() throws Exception {
+
+		when(customerService.getById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+		mockMvc.perform(get(CustomerController.BASE_URL + "/222")
+				                .contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound());
 	}
 }
