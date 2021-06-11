@@ -1,10 +1,10 @@
-package Jeroen.fruitsandnutsapi.apimodel;
+package Jeroen.fruitsandnutsapi.apimodel.mappers;
 
-import Jeroen.fruitsandnutsapi.apimodel.mappers.CustomerMapper;
+import Jeroen.fruitsandnutsapi.apimodel.CustomerDTO;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerMapperTest {
 

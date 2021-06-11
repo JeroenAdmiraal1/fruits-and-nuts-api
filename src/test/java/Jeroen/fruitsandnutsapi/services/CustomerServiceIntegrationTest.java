@@ -6,6 +6,7 @@ import Jeroen.fruitsandnutsapi.bootstrap.Bootstrap;
 import Jeroen.fruitsandnutsapi.domain.Customer;
 import Jeroen.fruitsandnutsapi.repositories.CategoryRepository;
 import Jeroen.fruitsandnutsapi.repositories.CustomerRepository;
+import Jeroen.fruitsandnutsapi.repositories.VendorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,14 @@ public class CustomerServiceIntegrationTest {
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	@Autowired
+	VendorRepository vendorRepository;
+
 	CustomerService customerService;
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+		Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
 		bootstrap.run();
 
 		customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);

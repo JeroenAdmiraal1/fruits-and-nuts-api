@@ -1,10 +1,10 @@
-package Jeroen.fruitsandnutsapi.apimodel;
+package Jeroen.fruitsandnutsapi.apimodel.mappers;
 
-import Jeroen.fruitsandnutsapi.apimodel.mappers.CategoryMapper;
+import Jeroen.fruitsandnutsapi.apimodel.CategoryDTO;
 import Jeroen.fruitsandnutsapi.domain.Category;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CategoryMapperTest {
 
