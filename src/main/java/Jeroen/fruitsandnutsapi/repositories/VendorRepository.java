@@ -1,7 +1,7 @@
 package Jeroen.fruitsandnutsapi.repositories;
 
 import Jeroen.fruitsandnutsapi.domain.Vendor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface VendorRepository extends JpaRepository<Vendor, Long> {
+public interface VendorRepository extends ReactiveMongoRepository<Vendor, String> {
 }
