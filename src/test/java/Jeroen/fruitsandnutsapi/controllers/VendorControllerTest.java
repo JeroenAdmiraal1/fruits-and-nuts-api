@@ -129,9 +129,9 @@ class VendorControllerTest {
 	void patchVendorWithoutChanges() {
 
 		BDDMockito.given(vendorRepository.findById(anyString()))
-				.willReturn(Mono.just(Vendor.builder().firstName("Jack").build()));
+				.willReturn(Mono.just(Vendor.builder().firstName("Jack").lastName("Sparrow").build()));
 
-		Mono<Vendor> vendorToPatch = Mono.just(Vendor.builder().firstName("Jack").build());
+		Mono<Vendor> vendorToPatch = Mono.just(Vendor.builder().firstName("Jack").lastName("Sparrow").build());
 
 		webTestClient.patch()
 				.uri("/vendors/1")

@@ -51,8 +51,19 @@ public class VendorController {
 
 		Vendor foundVendor = vendorRepository.findById(id).block();
 
+		boolean changesAreMade = false;
+
 		if(foundVendor.getFirstName() == null || !foundVendor.getFirstName().equals(vendor.getFirstName())){
 			foundVendor.setFirstName(vendor.getFirstName());
+			changesAreMade = true;
+		}
+
+		if(foundVendor.getLastName() == null || !foundVendor.getLastName().equals(vendor.getLastName())){
+			foundVendor.setLastName(vendor.getLastName());
+			changesAreMade = true;
+		}
+
+		if(changesAreMade){
 			return vendorRepository.save(foundVendor);
 		}
 		return Mono.just(foundVendor);
