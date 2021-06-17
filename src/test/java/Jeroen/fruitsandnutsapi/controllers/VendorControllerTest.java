@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class VendorControllerTest {
@@ -89,4 +90,55 @@ class VendorControllerTest {
 				.expectStatus().isOk();
 
 	}
+
+	@Test
+	void patchVendorWithChanges() {
+		BDDMockito.given(vendorRepository.save(any(Vendor.class)))
+				.willReturn(Mono.just(Vendor.builder().build()));
+		BDDMockito.given(vendorRepository.findById(anyString()))
+				.willReturn(Mono.just(Vendor.builder().firstName("Jack").build()));
+
+		Mono<Vendor> vendorToPatch = Mono.just(Vendor.builder().firstName("Joe").build());
+
+		webTestClient.patch()
+				.uri("/vendors/1")
+				.body(vendorToPatch, Vendor.class).exchange()
+				.expectStatus().isOk();
+
+		verify(vendorRepository, times(1)).save(any());
+	}
+
+	@Test
+	void patchVendorWithMissingName() {
+		BDDMockito.given(vendorRepository.save(any(Vendor.class)))
+				.willReturn(Mono.just(Vendor.builder().build()));
+		BDDMockito.given(vendorRepository.findById(anyString()))
+				.willReturn(Mono.just(Vendor.builder().build()));
+
+		Mono<Vendor> vendorToPatch = Mono.just(Vendor.builder().firstName("Joe").build());
+
+		webTestClient.patch()
+				.uri("/vendors/1")
+				.body(vendorToPatch, Vendor.class).exchange()
+				.expectStatus().isOk();
+
+		verify(vendorRepository, times(1)).save(any());
+	}
+
+	@Test
+	void patchVendorWithoutChanges() {
+
+		BDDMockito.given(vendorRepository.findById(anyString()))
+				.willReturn(Mono.just(Vendor.builder().firstName("Jack").build()));
+
+		Mono<Vendor> vendorToPatch = Mono.just(Vendor.builder().firstName("Jack").build());
+
+		webTestClient.patch()
+				.uri("/vendors/1")
+				.body(vendorToPatch, Vendor.class).exchange()
+				.expectStatus().isOk();
+
+		verify(vendorRepository, never()).save(any());
+	}
+
 }

@@ -16,6 +16,8 @@ import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
@@ -85,7 +87,7 @@ class CategoryControllerTest {
 	}
 
 	@Test
-	void patchCategory() {
+	void patchCategoryWithChanges() {
 		BDDMockito.given(categoryRepository.findById(anyString()))
 				.willReturn(Mono.just(Category.builder().description("Nuts").build()));
 		BDDMockito.given(categoryRepository.save(any(Category.class)))
@@ -97,5 +99,22 @@ class CategoryControllerTest {
 				.uri("/categories/1")
 				.body(categoryToUpdate, Category.class).exchange()
 				.expectStatus().isOk();
+
+		verify(categoryRepository).save(any());
+	}
+
+	@Test
+	void patchCategoryNoChanges() {
+		BDDMockito.given(categoryRepository.findById(anyString()))
+				.willReturn(Mono.just(Category.builder().description("Nuts").build()));
+
+		Mono<Category> categoryToUpdate = Mono.just(Category.builder().description("Nuts").build());
+
+		webTestClient.patch()
+				.uri("/categories/1")
+				.body(categoryToUpdate, Category.class).exchange()
+				.expectStatus().isOk();
+
+		verify(categoryRepository, never()).save(any());
 	}
 }
