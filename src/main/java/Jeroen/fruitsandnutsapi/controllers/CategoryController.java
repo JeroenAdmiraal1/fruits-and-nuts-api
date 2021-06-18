@@ -1,7 +1,7 @@
 package Jeroen.fruitsandnutsapi.controllers;
 
 import Jeroen.fruitsandnutsapi.domain.Category;
-import Jeroen.fruitsandnutsapi.repositories.CategoryRepository;
+import Jeroen.fruitsandnutsapi.services.CategoryService;
 import org.reactivestreams.Publisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,44 +18,36 @@ import reactor.core.publisher.Mono;
 @RestController
 public class CategoryController {
 
-	private CategoryRepository categoryRepository;
+	private final CategoryService categoryService;
 
-	public CategoryController(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
+	public CategoryController(CategoryService categoryService) {
+		this.categoryService = categoryService;
 	}
 
 	@GetMapping("/categories")
 	Flux<Category> listOfCategories() {
-		return categoryRepository.findAll();
+		return categoryService.findAllCategories();
 	}
 
 	@GetMapping("/categories/{id}")
 	Mono<Category> getById(@PathVariable String id){
-		return categoryRepository.findById(id);
+		return categoryService.findById(id);
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/categories")
 	Mono<Void> createCategories(@RequestBody Publisher<Category> categoryPublisher) {
-		return categoryRepository.saveAll(categoryPublisher).then();
+		return categoryService.saveAllCategories(categoryPublisher).then();
 	}
 
 	@PutMapping("/categories/{id}")
 	Mono<Category> updateCategory(@PathVariable String id, @RequestBody Category category) {
 		category.setId(id);
-		return categoryRepository.save(category);
+		return categoryService.saveCategory(category);
 	}
 
 	@PatchMapping("/categories/{id}")
 	Mono<Category> patchCategory(@PathVariable String id, @RequestBody Category category) {
-
-		Category foundCategory = categoryRepository.findById(id).block();
-
-		if(foundCategory.getDescription() == null || !foundCategory.getDescription().equals(category.getDescription())){
-			foundCategory.setDescription(category.getDescription());
-			return categoryRepository.save(foundCategory);
-		}
-
-		return Mono.just(foundCategory);
+		return categoryService.patchCategory(id, category);
 	}
 }
