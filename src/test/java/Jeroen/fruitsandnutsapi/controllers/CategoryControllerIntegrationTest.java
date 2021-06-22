@@ -22,6 +22,8 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -57,8 +59,7 @@ class CategoryControllerIntegrationTest {
 		mockMvc.perform(get(CategoryController.BASE_URL)
 				                .contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.categoryDTOList", hasSize(2)))
-				.andDo(document("categories"));
+				.andExpect(jsonPath("$.categoryDTOList", hasSize(2)));
 	}
 
 	@Test
@@ -73,8 +74,14 @@ class CategoryControllerIntegrationTest {
 				                .contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.name", equalTo(NAME)))
-				.andDo(document("categories", pathParameters(parameterWithName("name")
-						                                             .description("name of requested category"))));;
+				.andDo(document("categories",
+						pathParameters(
+								parameterWithName("name").description("name of requested category")
+						),
+						responseFields(
+								fieldWithPath("id").description("Id of Category"),
+								fieldWithPath("name").description("name of requested category")
+						)));
 	}
 
 

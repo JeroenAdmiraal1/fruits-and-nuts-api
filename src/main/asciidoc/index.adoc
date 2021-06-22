@@ -2,7 +2,7 @@
 Jeroen Admiraal;
 :doctype: book
 :icons: font
-:source-highlighter: highlightjs
+:source-highlighter: highlights
 
 Sample application demonstrating how to use Spring REST Docs with JUnit 5.
 
