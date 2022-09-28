@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerRepository customerRepository;
 	private CustomerMapper customerMapper;
 
-	public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+	public CustomerServiceImpl(final CustomerRepository customerRepository, final CustomerMapper customerMapper) {
 		this.customerRepository = customerRepository;
 		this.customerMapper = customerMapper;
 	}
@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDTO getById(Long id) {
+	public CustomerDTO getById(final Long id) {
 
 		return customerRepository.findById(id)
 				       .map(customerMapper::customerToCustomerDTO)
@@ -43,19 +43,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+	public CustomerDTO createNewCustomer(final CustomerDTO customerDTO) {
 		return saveAndReturnDTO(customerMapper.customerDtoToCustomer(customerDTO));
 	}
 
 	@Override
-	public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO) {
+	public CustomerDTO saveCustomerByDTO(final Long id, final CustomerDTO customerDTO) {
 		Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
 		customer.setId(id);
 		return saveAndReturnDTO(customer);
 	}
 
 	@Override
-	public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
+	public CustomerDTO patchCustomer(final Long id, final CustomerDTO customerDTO) {
 		return customerRepository.findById(id).map(customer -> {
 
 			if(customerDTO.getFirstname() != null){
@@ -74,19 +74,19 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public void deleteCustomerById(Long id) {
+	public void deleteCustomerById(final Long id) {
 		customerRepository.deleteById(id);
 	}
 
 
-	private CustomerDTO saveAndReturnDTO(Customer customer) {
+	private CustomerDTO saveAndReturnDTO(final Customer customer) {
 		Customer savedCustomer = customerRepository.save(customer);
 		CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
 		returnDto.setCustomer_url(getCustomerUrl(savedCustomer.getId()));
 		return returnDto;
 	}
 
-	private String getCustomerUrl(Long id) {
+	private String getCustomerUrl(final Long id) {
 		return CustomerController.BASE_URL + "/" + id;
 	}
 }

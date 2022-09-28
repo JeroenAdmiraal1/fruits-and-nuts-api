@@ -14,7 +14,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryRepository categoryRepository;
 	private CategoryMapper categoryMapper;
 
-	public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
+	public CategoryServiceImpl(final CategoryRepository categoryRepository, final CategoryMapper categoryMapper) {
 		this.categoryRepository = categoryRepository;
 		this.categoryMapper = categoryMapper;
 	}
@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public CategoryDTO getCategoryByName(String name) {
+	public CategoryDTO getCategoryByName(final String name) {
 		return categoryMapper.categoryToCategoryDTO(categoryRepository.findByName(name));
 	}
 }

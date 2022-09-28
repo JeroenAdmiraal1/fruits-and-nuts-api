@@ -15,7 +15,7 @@ public class VendorServiceImpl implements VendorService {
 	private VendorMapper vendorMapper;
 	private VendorRepository vendorRepository;
 
-	public VendorServiceImpl(VendorMapper vendorMapper, VendorRepository vendorRepository) {
+	public VendorServiceImpl(final VendorMapper vendorMapper, final VendorRepository vendorRepository) {
 		this.vendorMapper = vendorMapper;
 		this.vendorRepository = vendorRepository;
 	}
@@ -35,7 +35,7 @@ public class VendorServiceImpl implements VendorService {
 
 
 	@Override
-	public VendorDTO getById(Long id) {
+	public VendorDTO getById(final Long id) {
 
 		return vendorRepository
 				       .findById(id)
@@ -47,19 +47,19 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public VendorDTO createNewVendor(VendorDTO vendorDTO) {
+	public VendorDTO createNewVendor(final VendorDTO vendorDTO) {
 		return saveAndReturnDTO(vendorMapper.vendorDtoToVendor(vendorDTO));
 	}
 
 	@Override
-	public VendorDTO saveVendorByDTO(Long id, VendorDTO vendorDTO) {
+	public VendorDTO saveVendorByDTO(final Long id, final VendorDTO vendorDTO) {
 		Vendor vendor = vendorMapper.vendorDtoToVendor(vendorDTO);
 		vendor.setId(id);
 		return saveAndReturnDTO(vendor);
 	}
 
 	@Override
-	public VendorDTO patchVendor(Long id, VendorDTO vendorDTO) {
+	public VendorDTO patchVendor(final Long id, final VendorDTO vendorDTO) {
 		return vendorRepository.findById(id).map(vendor -> {
 
 			if(vendorDTO.getName() != null){
@@ -74,15 +74,15 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public void deleteVendorById(Long id) {
+	public void deleteVendorById(final Long id) {
 		vendorRepository.deleteById(id);
 	}
 
-	private String getVendorUrl(Long id) {
+	private String getVendorUrl(final Long id) {
 		return "/vendors/" + id;
 	}
 
-	private VendorDTO saveAndReturnDTO(Vendor vendor) {
+	private VendorDTO saveAndReturnDTO(final Vendor vendor) {
 		Vendor savedVendor = vendorRepository.save(vendor);
 		VendorDTO returnDto = vendorMapper.vendorToVendorDTO(savedVendor);
 		returnDto.setVendor_url(getVendorUrl(savedVendor.getId()));

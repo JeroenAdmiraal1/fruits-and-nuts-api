@@ -11,7 +11,7 @@ public interface VendorMapper {
 
 	VendorMapper INSTANCE = Mappers.getMapper(VendorMapper.class);
 
-	VendorDTO vendorToVendorDTO(Vendor vendor);
+	VendorDTO vendorToVendorDTO(final Vendor vendor);
 
-	Vendor vendorDtoToVendor(VendorDTO vendorDTO);
+	Vendor vendorDtoToVendor(final VendorDTO vendorDTO);
 }

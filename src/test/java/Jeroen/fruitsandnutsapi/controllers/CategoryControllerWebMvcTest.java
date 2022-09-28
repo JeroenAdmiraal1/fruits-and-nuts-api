@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(RestDocumentationExtension.class)
 @AutoConfigureRestDocs
 @WebMvcTest(CategoryController.class)
-class CategoryControllerIntegrationTest {
+class CategoryControllerWebMvcTest {
 
 	public static final String NAME = "Lime";
 
